@@ -35,3 +35,15 @@ db.ventas.aggregate([{$unwind:"$productos"},
 {$group:{_id:"$productos.productoId",
 sumaTotal:{$sum:"$productos.cantidad"}}}])
 
+db.clientes.aggregate([{ $unwind: "$compras" }, { $group: { _id: "$nombre", ventas: { $sum: "$compras" } } }])
+
+db.ventas.aggregate([
+  {
+    $group: {
+      _id: { mes: { $month: "$fecha" } },
+      ventas: { $sum: "$total" }}}])
+
+db.productos.aggregate([{$group:{_id:"$categoria", promedio:{$avg:"$precio"}}}])
+
+db.productos.aggregate([ {$sort:{stock:-1}},
+                        {$limit:3}])

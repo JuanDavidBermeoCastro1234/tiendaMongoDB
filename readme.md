@@ -49,6 +49,7 @@ hago la consulta correcta y le digo que elimine todos los que tengas stock menor
 ### Consultas con Expresiones Regulares
 
 **Buscar productos cuyo nombre empiece por "Boro".**
+
 ![](capturas/9.png)
 hago la consulta usando regex para expresiones regulares 
 
@@ -82,5 +83,18 @@ este fue diferente en que tuve que usar $unwind para descomponer el array en doc
 
 **Agrupar clientes por cantidad de compras realizadas.**
 ![](capturas/16.png)
+use grou para agrupar por clientes y para ver sus compras por cliente use unwind para desestructurar el array y poder sumar sus compras que estaban dentro del array compras
 
+**Mostrar el total de ventas por mes (usa $group y $month).**
+![](capturas/17.png)
+agrupe por mes y usando month que solo recibe formatos tipo fecha lo pase al mes correspondiente y ya que todas las ventas son del mes 6 se muestra solamente el mes 6
 
+**Calcular el promedio de precios por categoría de producto.**
+![](capturas/18.png)
+promedio calculado por categoria y usando aggregate del pipeline
+
+**Mostrar los 3 productos con mayor stock (orden descendente con $sort y $limit).**
+![](capturas/19.png)
+organiza y muestra solo los tres primeros con mas stock
+
+****
