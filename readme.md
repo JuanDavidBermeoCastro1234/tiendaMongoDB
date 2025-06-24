@@ -112,4 +112,13 @@ esta pasa lo mismo que explique en el primer caso pero la modifi que para que en
 
 
 **Definir una función verificarStock(productoId, cantidadDeseada) que retorne si hay suficiente stock.**
-![](capturas/21.png)
+![](capturas/22.png)
+listo primero creo la funcion para evitar errores y ver si funciona y despues la guardo lo cual lo hace normalemente es lo mismo pero alrevez 
+
+### Transacciones
+
+**1. Simular una venta: a. Descontar del stock del producto b. Insertar la venta en la colección `ventas`Todo dentro de una transacción.**
+![](capturas/22.png)
+
+
+
