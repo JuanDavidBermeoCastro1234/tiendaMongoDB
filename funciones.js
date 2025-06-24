@@ -60,33 +60,51 @@ db.ventas.aggregate([{$unwind:"$productos"},
   db.clientes.aggregate([{ $unwind: "$compras" }, { $group: { _id: "$nombre", ventas: { $sum: "$compras" } } }])
 
 
-  db.system.js.insertOne({
-  _id: "clienteActivo",
-  value: new Code(`function(a){
-    const resultado = db.clientes.aggregate([
-      { $match: { _id: a } },
-      {
-        $project: {
-          nombre: 1,
-          estado: {
-            $cond: {
-              if: { $gte: [ { $size: "$compras" }, 3 ] },
-              then: true,
-              else: false
-            }
-          }
-        }
-      }
-    ]).toArray();
-    return resultado.length > 0 ? resultado[0].estado : false;
-  }`)
-});
+// pruebas que no funcionaron  db.system.js.insertOne({
+//   _id: "clienteActivo",
+//   value: new Code(`function(a){
+//     const resultado = db.clientes.aggregate([
+//       { $match: { _id: a } },
+//       {
+//         $project: {
+//           nombre: 1,
+//           estado: {
+//             $cond: {
+//               if: { $gte: [ { $size: "$compras" }, 3 ] },
+//               then: true,
+//               else: false
+//             }
+//           }
+//         }
+//       }
+//     ]).toArray();
+//     return resultado.length > 0 ? resultado[0].estado : false;
+//   }`)
+// });
 
-db.system.js.insertOne({_id:"clienteActivo",value:new Code("function(a){const resultado=db.clientes.aggregate([{$match:{_id:a}},{$project:{nombre:1,estado:{$cond:{if:{$gte:[{$size:$compras},3]},then:true,else:false}}}]).toArray();return resultado;}")});
+// db.system.js.insertOne({_id:"clienteActivo",value:new Code("function(a){const resultado=db.clientes.aggregate([{$match:{_id:a}},{$project:{nombre:1,estado:{$cond:{if:{$gte:[{$size:$compras},3]},then:true,else:false}}}]).toArray();return resultado;}")});
 
-db.system.js.insertOne({_id:"clienteActivo",value:new Code("function(a){const resultado=db.clientes.aggregate([{$match:{_id:a}},{$project:{nombre:1,estado:{$cond:{if:{$gte:[{$size:\"$compras\"},3]},then:true,else:false}}}]).toArray();return resultado;}")});
+// db.system.js.insertOne({_id:"clienteActivo",value:new Code("function(a){const resultado=db.clientes.aggregate([{$match:{_id:a}},{$project:{nombre:1,estado:{$cond:{if:{$gte:[{$size:\"$compras\"},3]},then:true,else:false}}}]).toArray();return resultado;}")});
 
-db.system.js.insertOne({_id: "clienteActivo",value: new Code(`function(id) {const cliente = db.clientes.findOne({ _id: id }); if (cliente.compras.length >= 3) then:true,else:false}; return cliente;}`)});
+// db.system.js.insertOne({_id: "clienteActivo",value: new Code(`function(id) {const cliente = db.clientes.findOne({ _id: id }); if (cliente.compras.length >= 3) then:true,else:false}; return cliente;}`)});
 
 
-db.system.js.insertOne({_id: "clienteActivo",value: new Code("function(id){const cliente=db.clientes.findOne({_id:id});if(cliente && cliente.compras.length>=3){return true;}else{return false;}}")});
+// db.system.js.insertOne({_id: "clienteActivo",value: new Code("function(id){const cliente=db.clientes.findOne({_id:id});if(clientes.compras.length>=3){return true;}else{return false;}}")});
+
+
+// // Definir una función clienteActivo(idCliente) que devuelva true si el cliente tiene más de 3 compras registradas.
+
+
+// db.system.js.insertOne({_id: "clienteActivo", value: new Code("function(id){const cliente=db.clientes.findOne({_id:id});return (cliente && cliente.compras && cliente.compras.length>=3)?(print:true):false;}")});
+
+// print(true)
+
+
+// db.system.js.insertOne({_id: "clienteActivo",value: new Code("function(id){var cliente=db.clientes.findOne({_id:id});return (cliente && cliente.compras && cliente.compras.length>=3) ? (print(true), true) : false;}")});
+
+
+function clienteActivo(id) {var cliente = db.clientes.findOne({ _id: id });return (cliente && cliente.compras && cliente.compras.length >= 3) ? (print("Cliente activo:", true), true) : (print("Cliente inactivo:", false), false);}
+
+
+function clienteActivo(id) {var cliente = db.clientes.findOne({ _id: id });return (cliente.compras.reduce((suma,numero)=> suma+numero,0))>=3 ? (print("Cliente activo:", true), true) : (print("Cliente inactivo:", false), false);}
+

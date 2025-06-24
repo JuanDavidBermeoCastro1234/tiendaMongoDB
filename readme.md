@@ -105,5 +105,11 @@ se cumple con lo requerido en la funcion
 
 **Definir una función clienteActivo(idCliente) que devuelva true si el cliente tiene más de 3 compras registradas.**
 ![](capturas/20.png)
+listo tuve que hacer la funcion sin guardarla sino declarandola directamente con logica de javascripta ya que si la guardaba usando los pasos dados en la clase Esto hace que db.clientes.findOne() falle silenciosamente (devuelve undefined), lo que lleva a que tu función siempre retorne false y no funcione entonces tuve que declararla directamente y ejecutarla sin guardar y sin usar aggregate ya que no es dejavascript sino de mongo para que me funcionara lo que hace es que si el array compras tiene solamente dos datos o menos de cualquier tipo, osea dos compras o menos da false y si tiene tres compras o mas da true 
+![](capturas/21.png)
+
+esta pasa lo mismo que explique en el primer caso pero la modifi que para que en vez de cuantos datos tiene el array si es mayor que tres, sume los datos del array usanodo reduce nativo de javascript y si la suma es mayor que tres me de true para este ejemplo modifique el _id:1 ya que ningun documento la suma da menos de tres en todos los casos la suma es mayor de tres.
 
 
+**Definir una función verificarStock(productoId, cantidadDeseada) que retorne si hay suficiente stock.**
+![](capturas/21.png)
