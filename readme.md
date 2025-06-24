@@ -97,4 +97,13 @@ promedio calculado por categoria y usando aggregate del pipeline
 ![](capturas/19.png)
 organiza y muestra solo los tres primeros con mas stock
 
-****
+### Funciones definidas en system.js
+
+**Definir una función calcularDescuento(precio, porcentaje) que devuelva el precio con descuento aplicado.**
+![](capturas/20.png)
+se cumple con lo requerido en la funcion
+
+**Definir una función clienteActivo(idCliente) que devuelva true si el cliente tiene más de 3 compras registradas.**
+![](capturas/20.png)
+
+
