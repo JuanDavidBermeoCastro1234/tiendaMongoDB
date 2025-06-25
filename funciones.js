@@ -108,3 +108,4 @@ function clienteActivo(id) {var cliente = db.clientes.findOne({ _id: id });retur
 
 function clienteActivo(id) {var cliente = db.clientes.findOne({ _id: id });return (cliente.compras.reduce((suma,numero)=> suma+numero,0))>=3 ? (print("Cliente activo:", true), true) : (print("Cliente inactivo:", false), false);}
 
+function verificar(productoId,cantidadDeseada){const verificar2 = db.productos.findOne({_id:productoId});if (cantidadDeseada<=verificar2.stock) {return print("suficiente")} else {return print("insuficiente")}}

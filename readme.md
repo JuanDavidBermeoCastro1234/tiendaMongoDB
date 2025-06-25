@@ -118,7 +118,90 @@ listo primero creo la funcion para evitar errores y ver si funciona y despues la
 ### Transacciones
 
 **1. Simular una venta: a. Descontar del stock del producto b. Insertar la venta en la colección `ventas`Todo dentro de una transacción.**
-![](capturas/22.png)
+
+    function realizarVenta() {
+    const tx = db.getMongo().startSession();
+    const dbTx = tx.getDatabase("ecommerce");
+    tx.startTransaction();
+    try {
+        dbTx.productos.updateOne({sku: "P-100"}, {$inc: {disponible: -1}});
+        dbTx.ordenes.insertOne({ordenId: 1001, sku: "P-100", cliente: "C-505", fecha: new Date()});
+        tx.commitTransaction();
+        return "Venta exitosa";
+    } catch (e) {
+        tx.abortTransaction();
+        return `Error: ${e.message}`;
+    } finally {
+        tx.endSession();
+    }
+}
+![](capturas/23.png)
+se hace la transaccion que se refleja y se hace efectiva 
 
 
+**2. Simular la entrada de nuevo inventario:a. Insertar un documento en `inventario`b. Aumentar el stock del producto correspondiente Todo dentro de una transacción.**
 
+        const session = db.getMongo().startSession();
+        const dbSession = session.getDatabase("tienda");
+
+        session.startTransaction();
+
+        try {
+    
+    db.inventario.insertOne({
+        productoId: 1,
+        lote: "L011",
+        cantidad: 10,
+        entrada: new Date()
+    });
+    db.productos.updateOne(
+        { _id: 1 },
+        { $inc: { stock: 10 } },
+        );
+    session.commitTransaction();
+    print("bien.");
+    } catch (error) {
+        print(" Error");
+        print(error)
+        session.abortTransaction();
+    } finally {
+    session.endSession();
+    }
+
+![](capturas/24.png)
+muestra bien despues que se hace la transaccion y se refleja en la base de datos 
+
+**3. Hacer una operación de devolución: a. Aumentar el stockb. Eliminar la venta correspondiente**
+
+        const session = db.getMongo().startSession();
+    const dbSession = session.getDatabase("tienda");
+
+    session.startTransaction();
+
+    try {
+
+    db.productos.updateOne(
+        { _id: 1 },
+        { $inc: { stock: 10 } },
+        );
+
+    db.ventas.deleteOne({
+        _id:11
+    })
+    
+    session.commitTransaction();
+    print("se hizo bien .");
+    } catch (error) {
+        print(" Error de transaccion:");
+        print(error)
+        session.abortTransaction();
+    } finally {
+    session.endSession();
+    }
+
+![](capturas/25.png)
+ya listo ultima cumple lo requerido 
+
+### Indexación
+
+**Crear un índice en el campo nombre de productos para mejorar búsquedas por nombre.**
