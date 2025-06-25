@@ -205,3 +205,17 @@ ya listo ultima cumple lo requerido
 ### Indexación
 
 **Crear un índice en el campo nombre de productos para mejorar búsquedas por nombre.**
+![](capturas/26.png)
+se crea el indice solicitado
+
+**crear un índice compuesto sobre categoria y precio para facilitar búsquedas filtradas por ambas condiciones.**
+![](capturas/27.png)
+se crea el indice solicitado
+
+**Crear un índice en el campo email de clientes para validaciones rápidas de duplicados.**
+![](capturas/28.png)
+se crea el indice solicitado
+
+**Usar explain() en una consulta para mostrar si el índice de nombre está siendo utilizado.**
+![](capturas/29.png)
+en esta imagen se demuestra que para las busquedas si esta utilizando los indices y que dice         stage: 'IXSCAN' 
